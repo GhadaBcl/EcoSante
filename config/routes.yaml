@@ -1,0 +1,21 @@
+index:
+    path: /acceuil
+    controller: App\Controller\DefaultController::index
+
+addreclamation:
+    path: /addreclamation
+    controller: App\Controller\ReclamationController::addreclamation
+
+showreclamation:
+    path: /showreclamation
+    controller: App\Controller\ReclamationController::showreclamation
+    methods: GET
+
+updatereclamation:
+    path: /updatereclamation/{id}
+    controller: App\Controller\ReclamationController::updatereclamation
+    methods: ['GET', 'POST']
+
+deletereclamation:
+    path: /deletereclamation/{id}
+    controller: App\Controller\ReclamationController::deletereclamation

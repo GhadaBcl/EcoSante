@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1 style="text-align: center;">Liste des réclamations</h1>
+<br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Téléphone</th>
+                <th>Email</th>
+                <th>Objet</th>
+                <th>Message</th>
+                <th>Actions</th> <!-- Ajout de la colonne Actions -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for reclamation in reclamations %}
+                <tr>
+                    <td>{{ reclamation.nom }}</td>
+                    <td>{{ reclamation.prenom }}</td>
+                    <td>{{ reclamation.telephone }}</td>
+                    <td>{{ reclamation.email }}</td>
+                    <td>{{ reclamation.objet }}</td>
+                    <td>{{ reclamation.message }}</td>
+                    <td>
+                        <a href="{{ path('updatereclamation', {'id': reclamation.id}) }}" class="btn btn-primary">Modifier</a>
+                        <a href="{{ path('deletereclamation', {'id': reclamation.id}) }}" class="btn btn-danger">Supprimer</a>
+
+                    </td>
+              
+                    
+                    
+                </tr>
+                
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-center">
+        <a href="{{ path('addreclamation') }}" class="btn btn-primary">Ajouter une réclamation</a>
+    </div>   <a href="{{ path('addreclamation') }}" class="btn btn-secondary">Retour</a> 
+   
+{% endblock %}
+
+
+
