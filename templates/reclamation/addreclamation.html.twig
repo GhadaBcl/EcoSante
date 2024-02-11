@@ -388,9 +388,10 @@
                                     </li>
                                 </ul>
                                 <br>
-                                <p class="form-row">
-                                    <a href="{{ path('showreclamation') }}" class="btn btn-submit">Voir mes réclamations</a>
+                                <p class="form-row" style="font-size: 14px;">
+                                    <button><a href="{{ path('showreclamation') }}" class="btn btn-submit">Voir mes réclamations</a></button>
                                 </p>
+                                
                                 
                                     <br>
                                 <div class="biolife-social inline">
@@ -457,7 +458,7 @@
     {{ form_end(form) }}
 
     {% for message in app.flashes('success') %}
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success" role="alert" style="font-size: 14px ">
             {{ message }}
         </div>
     {% endfor %}

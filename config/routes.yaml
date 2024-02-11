@@ -19,3 +19,8 @@ updatereclamation:
 deletereclamation:
     path: /deletereclamation/{id}
     controller: App\Controller\ReclamationController::deletereclamation
+
+
+deleteadmin:
+    path: /deleteadmin/{id}
+    controller: App\Controller\AdminController::deleteadmin

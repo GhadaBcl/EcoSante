@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Admin EcoSanté{% endblock %}</title>
+
+        {% block stylesheets %}
+       <!-- partie admin -->
+        <link rel="shortcut icon" type="image/png" href="{{ asset('assetsA/images/logos/favicon.png') }}" />
+        <link rel="stylesheet" href="{{ asset('assetsA/css/styles.min.css') }}" />
+
+
+        {% endblock %}
+
+        {% block javascripts %}
+        <!-- partie admin -->
+        <script src="{{ asset('assetsA/libs/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset('assetsA/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('assetsA/js/sidebarmenu.js') }}"></script>
+        <script src="{{ asset('assetsA/js/app.min.js') }}"></script>
+        <script src="{{ asset('assetsA/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
+        <script src="{{ asset('assetsA/libs/simplebar/dist/simplebar.js') }}"></script>
+        <script src="{{ asset('assetsA/js/dashboard.js') }}"></script>
+
+
+    {% endblock %}
+    
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>
