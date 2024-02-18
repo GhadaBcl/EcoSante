@@ -1,0 +1,13 @@
+{% extends 'baseA.html.twig' %}
+
+{% block body %}
+
+<div>
+    <form action="{{ path('recherchereponse') }}" method="GET">
+        <input type="text" name="id" placeholder="ID de la réponse"> <!-- Utilisez le nom "id" pour le champ d'entrée -->
+        <button type="submit">Rechercher</button>
+    </form>
+</div>
+
+{% endblock %}
+

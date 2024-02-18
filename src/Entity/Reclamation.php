@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ReclamationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -34,23 +36,19 @@ class Reclamation
         message: "Le nom ne doit pas contenir de chiffres"
     )]
     #[Assert\Length(
-        max: 20,
+        max: 30,
         maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères"
     )]
     #[ORM\Column(length: 30)]
     private ?string $prenom = null;
 
 
-    #[Assert\Regex(pattern: "/^[0-9]+$/", message: "Le numéro de téléphone ne doit contenir que des chiffres")]
-    #[Assert\Length(max: 8, maxMessage: "Le numéro de téléphone doit avoir au maximum 8 chiffres")]
+    #[Assert\Regex(pattern: "/^\d{8}$/", message: "Le numéro de téléphone doit contenir exactement 8 chiffres")]
     #[ORM\Column]
     private ?int $telephone = null;
 
 
-    #[Assert\Regex(
-        pattern: "/@/",
-        message: "L'adresse e-mail doit contenir le symbole @."
-    )]
+    #[Assert\Email(message: "L'adresse e-mail '{{ value }}' n'est pas valide.")]
     #[Assert\NotBlank(message: "L'email est requis")]
     #[ORM\Column(length: 100)]
     private ?string $email = null;
@@ -60,11 +58,11 @@ class Reclamation
  
     #[Assert\Regex(
         pattern: "/^[^\d]+$/",
-        message: "Le nom ne doit pas contenir de chiffres"
+        message: "L'objet ne doit pas contenir de chiffres"
     )]
     #[Assert\Length(
         max: 20,
-        maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères"
+        maxMessage: "L'objet ne peut pas dépasser {{ limit }} caractères"
     )]
     #[Assert\NotBlank(message: "L'objet est requis")]
     #[ORM\Column(length: 255)]
@@ -72,16 +70,29 @@ class Reclamation
 
 
     #[Assert\NotBlank(message: "Le message est requis")]
-    #[Assert\Regex(
-        pattern: "/^[^\d]+$/",
-        message: "Le nom ne doit pas contenir de chiffres"
-    )]
     #[Assert\Length(
         max: 20,
-        maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères"
+        maxMessage: "Le message ne peut pas dépasser {{ limit }} caractères"
     )]
     #[ORM\Column(length: 255)]
     private ?string $message = null;
+
+    #[ORM\OneToMany(mappedBy: 'reclamation', targetEntity: Reponse::class)]
+    private Collection $reclamation_r;
+
+    #[ORM\Column(length: 50)]
+    private ?string $etat ="en cours de traitement";
+
+    public function nouveauConstructeur()
+    {
+        // Initialisez la propriété à "en cours de traitement" uniquement si elle est nulle
+        $this->etat = $this->etat ?? "en cours de traitement";
+    }
+
+    public function __construct()
+    {
+        $this->reclamation_r = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -156,6 +167,48 @@ class Reclamation
     public function setMessage(string $message): static
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, reponse>
+     */
+    public function getReclamationR(): Collection
+    {
+        return $this->reclamation_r;
+    }
+
+    public function addReclamationR(reponse $reclamationR): static
+    {
+        if (!$this->reclamation_r->contains($reclamationR)) {
+            $this->reclamation_r->add($reclamationR);
+            $reclamationR->setReclamation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReclamationR(reponse $reclamationR): static
+    {
+        if ($this->reclamation_r->removeElement($reclamationR)) {
+            // set the owning side to null (unless already changed)
+            if ($reclamationR->getReclamation() === $this) {
+                $reclamationR->setReclamation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEtat(): ?string
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(string $etat): static
+    {
+        $this->etat = $etat;
 
         return $this;
     }

@@ -24,3 +24,12 @@ deletereclamation:
 deleteadmin:
     path: /deleteadmin/{id}
     controller: App\Controller\AdminController::deleteadmin
+
+addreponse:
+    path: /addreponse
+    controller: App\Controller\ReponseController::addreponse
+    
+showreponse:
+    path: /showreponse
+    controller: App\Controller\ReponseController::showReponses
+    methods: GET
